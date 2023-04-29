@@ -1,0 +1,9 @@
+[mysqld]
+
+default_authentication_plugin = mysql_native_password
+
+server-id = ${SERVER_ID}
+log_bin = 1
+binlog_do_db = playgroundDB
+enforce-gtid-consistency = true
+gtid-mode = ON

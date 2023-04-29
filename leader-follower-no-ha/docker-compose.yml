@@ -1,0 +1,82 @@
+version: '3.7'
+
+services:
+  mysql_primary:
+    build:
+      context: .
+      args:
+        SERVER_ID: 1
+    container_name: primary
+    hostname: primary
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_USER: primary_user
+      MYSQL_PASSWORD: primary_password
+      MYSQL_DATABASE: playgroundDB
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - overlay
+    volumes:
+      - ./data/primary:/var/lib/mysql
+
+
+  mysql_replica1:
+    build:
+      context: .
+      args:
+        SERVER_ID: 2
+    container_name: replica1
+    hostname: replica1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_USER: replication_user
+      MYSQL_PASSWORD: replication_password
+      MYSQL_DATABASE: playgroundDB
+    restart: always
+    ports:
+      - 3307:3306
+    networks:
+      - overlay
+    volumes:
+      - ./data/replica1:/var/lib/mysql
+
+  mysql_replica2:
+    build:
+      context: .
+      args:
+        SERVER_ID: 3
+    container_name: replica2
+    hostname: replica2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_USER: replication_user
+      MYSQL_PASSWORD: replication_password
+      MYSQL_DATABASE: playgroundDB
+    restart: always
+    ports:
+      - 3308:3306
+    networks:
+      - overlay
+    volumes:
+      - ./data/replica2:/var/lib/mysql
+
+  pmm-server:
+    image: percona/pmm-server:2.36.0
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "4432:4432"
+      - "42000:42000"
+    networks:
+      - overlay
+    volumes:
+      - ./pmm-data:/srv
+
+networks:
+  overlay:
