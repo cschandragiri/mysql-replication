@@ -1,7 +1,7 @@
-Docker MySQL master-slave replication 
+Docker MySQL leader-follower replication 
 ========================
 
-MySQL 8.0 master-slave replication playground with using Docker. We are using docker compose to build start a cluster
+MySQL 8.0 leader-follower replication playground with using Docker. We are using docker compose to build start a cluster
 of 1 primary and 2 replica mysql 8 servers along with a percona monitoring and management (pmm) server.
 
 ![Alt text](arch.png?raw=true "Arch")
@@ -15,12 +15,12 @@ chmod +x build.sh
 ./build.sh
 ```
 
-#### Log into master
+#### Log into leader
 ```bash
 docker exec primary sh -c "export MYSQL_PWD=root; mysql -u root playgroundDB -e 'select count(1) from code \G'"
 ```
 
-#### Log into replica instances
+#### Log into follower instances
 ```bash
 docker exec replica1 sh -c "export MYSQL_PWD=root; mysql -u root playgroundDB -e 'select count(1) from code \G'"
 docker exec replica2 sh -c "export MYSQL_PWD=root; mysql -u root playgroundDB -e 'select count(1) from code \G'"
