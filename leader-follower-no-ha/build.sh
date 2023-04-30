@@ -38,11 +38,3 @@ do
    SLAVE_STATUS=`docker exec $replica sh -c "export MYSQL_PWD=root; mysql -u root -e 'SHOW SLAVE STATUS \G'"`
    echo "Slave $replica Status: $SLAVE_STATUS"
 done
-
-#start_slave_stmt=""
-#start_slave_cmd='export MYSQL_PWD=111; mysql -u root -e "'
-#start_slave_cmd+="$start_slave_stmt"
-#start_slave_cmd+='"'
-#docker exec mysql_slave sh -c "$start_slave_cmd"
-#
-#docker exec mysql_slave sh -c "export MYSQL_PWD=111; mysql -u root -e 'SHOW SLAVE STATUS \G'"
