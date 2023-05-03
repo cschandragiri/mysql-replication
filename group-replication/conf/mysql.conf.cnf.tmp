@@ -16,7 +16,7 @@ relay_log_info_repository = TABLE
 relay_log_recovery = ON
 
 plugin_load = group_replication.so
-loose_group_replication_bootstrap_group= OFF
+loose_group_replication_bootstrap_group = OFF
 loose_group_replication_start_on_boot = OFF
 loose_group_replication_group_name = aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
 loose_group_replication_local_address = node${SERVER_ID}:33061

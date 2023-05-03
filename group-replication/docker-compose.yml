@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  mysql_primary:
+  node1:
     build:
       context: .
       args:
@@ -14,7 +14,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    restart: always
     ports:
       - 3306:3306
     networks:
@@ -23,7 +22,7 @@ services:
       - ./data/node1:/var/lib/mysql
 
 
-  mysql_replica1:
+  node2:
     build:
       context: .
       args:
@@ -36,7 +35,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    restart: always
     ports:
       - 3307:3306
     networks:
@@ -44,7 +42,7 @@ services:
     volumes:
       - ./data/node2:/var/lib/mysql
 
-  mysql_replica2:
+  node3:
     build:
       context: .
       args:
@@ -57,7 +55,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    restart: always
     ports:
       - 3308:3306
     networks:
@@ -67,7 +64,6 @@ services:
 
   pmm-server:
     image: percona/pmm-server:2.36.0
-    restart: always
     ports:
       - "80:80"
       - "443:443"

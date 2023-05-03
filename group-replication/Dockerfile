@@ -15,4 +15,4 @@ COPY conf/init.sql /docker-entrypoint-initdb.d/init.sql
 
 #Expose the mysql port
 EXPOSE $MYSQL_PORT
-CMD ["mysqld", "--bind-address=0.0.0.0"]
+CMD ["mysqld", "--defaults-file=/etc/mysql/conf.d/mysql.conf.cnf", "--bind-address=0.0.0.0"]
