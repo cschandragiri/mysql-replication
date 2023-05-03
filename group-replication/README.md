@@ -26,7 +26,7 @@ Create 3 instances of MySQL 8.0 group replication cluster and configure pmm serv
 chmod +x build.sh
 ./build.sh
 ```
-#### Wait for the MySQL group replication cluster to come ONLEINE
+#### Wait for the MySQL group replication cluster to come ONLINE
 ```agsl
 docker exec node1 sh -c "export MYSQL_PWD=root; mysql -u root playgroundDB -e 'SELECT * FROM performance_schema.replication_group_members; \G'"
 ```
