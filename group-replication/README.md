@@ -13,6 +13,7 @@ Docker MySQL group replication
 
 In this setup we are using 3 instances of MySQL 8 cluster (all configured as PRIMARY) along with a percona monitoring and management (pmm) server.
 We are sending equal amount of traffic to all 3 instances via a bash process and will be doing a read from another bash process.
+All 3 instances can take both read and write traffic. 
 
 ### Pre-requisite
 [docker installed on local machine](https://www.docker.com/)
@@ -43,6 +44,6 @@ chmod +x reader.sh
 ./reader.sh
 ```
 
-
-
-
+#### Improvements
+This setup is not configured for high availability yet, manually shutting down one of the dockers will send read/write
+traffic to remaining instances. 
