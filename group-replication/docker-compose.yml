@@ -1,0 +1,78 @@
+version: '3.7'
+
+services:
+  node1:
+    build:
+      context: .
+      args:
+        SERVER_ID: 1
+    container_name: node1
+    hostname: node1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: playgroundDB
+    ports:
+      - 3306:3306
+    networks:
+      - overlay
+    volumes:
+      - ./data/node1:/var/lib/mysql
+
+
+  node2:
+    build:
+      context: .
+      args:
+        SERVER_ID: 2
+    container_name: node2
+    hostname: node2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: playgroundDB
+    ports:
+      - 3307:3306
+    networks:
+      - overlay
+    volumes:
+      - ./data/node2:/var/lib/mysql
+
+  node3:
+    build:
+      context: .
+      args:
+        SERVER_ID: 3
+    container_name: node3
+    hostname: node3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PORT: 3306
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: playgroundDB
+    ports:
+      - 3308:3306
+    networks:
+      - overlay
+    volumes:
+      - ./data/node3:/var/lib/mysql
+
+  pmm-server:
+    image: percona/pmm-server:2.36.0
+    ports:
+      - "80:80"
+      - "443:443"
+      - "4432:4432"
+      - "42000:42000"
+    networks:
+      - overlay
+    volumes:
+      - ./pmm-data:/srv
+
+networks:
+  overlay:
