@@ -1,0 +1,27 @@
+[mysqld]
+
+default_authentication_plugin = mysql_native_password
+
+server_id = ${SERVER_ID}
+log_bin = mysql-bin-1.log
+binlog_do_db = playgroundDB
+enforce_gtid_consistency = ON
+gtid_mode = ON
+binlog_checksum = NONE
+
+log_slave_updates = ON
+binlog_checksum = NONE
+master_info_repository = TABLE
+relay_log_info_repository = TABLE
+relay_log_recovery = ON
+
+transaction_write_set_extraction = XXHASH64
+plugin_load = group_replication.so
+loose_group_replication_bootstrap_group = OFF
+loose_group_replication_start_on_boot = OFF
+loose_group_replication_group_name = aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+loose_group_replication_local_address = node${SERVER_ID}:33061
+loose_group_replication_group_seeds = node1:33061,node2:33061,node3:33061
+loose_group_replication_single_primary_mode = ON
+loose_group_replication_enforce_update_everywhere_checks = ON
+loose-group_replication_exit_state_action = READ_ONLY
