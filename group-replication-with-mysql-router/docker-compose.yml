@@ -1,67 +1,72 @@
 version: '3.7'
 
 services:
-  mysql_primary:
+  node1:
     build:
       context: .
       args:
         SERVER_ID: 1
-    container_name: primary
-    hostname: primary
+    container_name: node1
+    hostname: node1
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PORT: 3306
-      MYSQL_USER: primary_user
-      MYSQL_PASSWORD: primary_password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    restart: always
     networks:
       - overlay
     volumes:
-      - ./data/primary:/var/lib/mysql
+      - ./data/node1:/var/lib/mysql
 
-
-  mysql_replica1:
+  node2:
     build:
       context: .
       args:
         SERVER_ID: 2
-    container_name: replica1
-    hostname: replica1
+    container_name: node2
+    hostname: node2
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PORT: 3306
-      MYSQL_USER: replication_user
-      MYSQL_PASSWORD: replication_password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    restart: always
     networks:
       - overlay
     volumes:
-      - ./data/replica1:/var/lib/mysql
+      - ./data/node2:/var/lib/mysql
 
-  mysql_replica2:
+  node3:
     build:
       context: .
       args:
         SERVER_ID: 3
-    container_name: replica2
-    hostname: replica2
+    container_name: node3
+    hostname: node3
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PORT: 3306
-      MYSQL_USER: replication_user
-      MYSQL_PASSWORD: replication_password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    restart: always
     networks:
       - overlay
     volumes:
-      - ./data/replica2:/var/lib/mysql
+      - ./data/node3:/var/lib/mysql
+
+    # MySQL Router
+  router:
+    image: mysql/mysql-router:8.0
+    command: [ "--user=mysqlrouter", "--bootstrap", "primary:3306", "--conf-use-sockets", "--conf-base-port=7000", "--conf-bind-address=0.0.0.0" ]
+    ports:
+      - "7000:7000"
+      - "6446:6446"
+    networks:
+      - overlay
 
   pmm-server:
     image: percona/pmm-server:2.36.0
-    restart: always
     ports:
       - "80:80"
       - "443:443"

@@ -8,13 +8,14 @@ binlog_do_db = playgroundDB
 enforce_gtid_consistency = ON
 gtid_mode = ON
 binlog_checksum = NONE
+
 log_slave_updates = ON
-transaction_write_set_extraction = XXHASH64
 binlog_checksum = NONE
 master_info_repository = TABLE
 relay_log_info_repository = TABLE
 relay_log_recovery = ON
 
+transaction_write_set_extraction = XXHASH64
 plugin_load = group_replication.so
 loose_group_replication_bootstrap_group = OFF
 loose_group_replication_start_on_boot = OFF

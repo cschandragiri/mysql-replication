@@ -14,8 +14,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    ports:
-      - 3306:3306
     networks:
       - overlay
     volumes:
@@ -35,8 +33,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    ports:
-      - 3307:3306
     networks:
       - overlay
     volumes:
@@ -55,8 +51,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: playgroundDB
-    ports:
-      - 3308:3306
     networks:
       - overlay
     volumes:
