@@ -55,15 +55,22 @@ services:
     volumes:
       - ./data/node3:/var/lib/mysql
 
-    # MySQL Router
+  # MySQL Router
   router:
     image: mysql/mysql-router:8.0
-    command: [ "--user=mysqlrouter", "--bootstrap", "primary:3306", "--conf-use-sockets", "--conf-base-port=7000", "--conf-bind-address=0.0.0.0" ]
+    container_name: router
+    hostname: router
     ports:
-      - "7000:7000"
-      - "6446:6446"
+      - "3306:3306"
+    environment:
+      MYSQL_HOST: node1
+      MYSQL_PORT: 33061
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
     networks:
       - overlay
+    volumes:
+      - ./conf/router.conf:/etc/mysqlrouter/mysqlrouter.conf
 
   pmm-server:
     image: percona/pmm-server:2.36.0
