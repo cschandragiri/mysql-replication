@@ -14,6 +14,7 @@ binlog_checksum = NONE
 master_info_repository = TABLE
 relay_log_info_repository = TABLE
 relay_log_recovery = ON
+relay_log = mysql-relay
 
 transaction_write_set_extraction = XXHASH64
 plugin_load = group_replication.so
@@ -23,5 +24,4 @@ loose_group_replication_group_name = aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
 loose_group_replication_local_address = node${SERVER_ID}:33061
 loose_group_replication_group_seeds = node1:33061,node2:33061,node3:33061
 loose_group_replication_single_primary_mode = ON
-loose_group_replication_enforce_update_everywhere_checks = ON
-loose-group_replication_exit_state_action = READ_ONLY
+
