@@ -1,8 +1,8 @@
 #!/bin/bash
 # https://www.youtube.com/watch?v=JR7J_STLE5Y
-docker-compose down -v
-rm -rf data/*
-docker-compose up --build -d
+#docker-compose down -v
+#rm -rf data/*
+#docker-compose up --build -d
 
 for N in {1..3}
 do
@@ -34,4 +34,7 @@ do
 done
 
 STATEMENT='SELECT * FROM performance_schema.replication_group_members;'
+docker exec node1 sh -c "export MYSQL_PWD=root; mysql -u root -e '$STATEMENT'"
+
+STATEMENT='CREATE USER "router_user"@"%" IDENTIFIED BY "router_password"; GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO "router_user"@"%"; FLUSH PRIVILEGES;'
 docker exec node1 sh -c "export MYSQL_PWD=root; mysql -u root -e '$STATEMENT'"

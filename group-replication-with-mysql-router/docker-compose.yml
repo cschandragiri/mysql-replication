@@ -8,6 +8,7 @@ services:
         SERVER_ID: 1
     container_name: node1
     hostname: node1
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PORT: 3306
@@ -26,6 +27,7 @@ services:
         SERVER_ID: 2
     container_name: node2
     hostname: node2
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PORT: 3306
@@ -44,6 +46,7 @@ services:
         SERVER_ID: 3
     container_name: node3
     hostname: node3
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PORT: 3306
@@ -61,16 +64,19 @@ services:
     container_name: router
     hostname: router
     ports:
-      - "3306:3306"
+      - "6446:6446"
+    restart: always
     environment:
       MYSQL_HOST: node1
       MYSQL_PORT: 33061
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      MYSQL_CREATE_ROUTER_USER: router_user:router_password
     networks:
       - overlay
     volumes:
       - ./conf/router.conf:/etc/mysqlrouter/mysqlrouter.conf
+      - ./mysqlrouter/logs:/var/log/mysqlrouter
 
   pmm-server:
     image: percona/pmm-server:2.36.0
@@ -81,6 +87,7 @@ services:
       - "42000:42000"
     networks:
       - overlay
+    restart: always
     volumes:
       - ./pmm-data:/srv
 
