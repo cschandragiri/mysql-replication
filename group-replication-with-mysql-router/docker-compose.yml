@@ -67,7 +67,7 @@ services:
       - "6446:6446"
     restart: always
     environment:
-      MYSQL_HOST: node1
+      MYSQL_HOST: node2
       MYSQL_PORT: 33061
       MYSQL_USER: user
       MYSQL_PASSWORD: password
